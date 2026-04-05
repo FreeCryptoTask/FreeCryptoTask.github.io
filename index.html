@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoTask Elite | Dashboard</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --accent: #00f2ff;
+            --accent-purple: #7000ff;
+            --bg-dark: #05070a;
+            --card-glass: rgba(15, 23, 42, 0.8);
+            --border-glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated Background Particles */
+        .bg-animate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #101520 0%, #05070a 100%);
+        }
+
+        .blob {
+            position: absolute; width: 300px; height: 300px;
+            background: var(--accent-purple); filter: blur(120px);
+            border-radius: 50%; opacity: 0.2; animation: move 20s infinite alternate;
+        }
+
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(100%, 80%); }
+        }
+
+        .container {
+            max-width: 480px; margin: 0 auto; padding: 25px 15px;
+        }
+
+        /* Profile & Stats Header */
+        .user-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;
+        }
+
+        .user-info { display: flex; align-items: center; gap: 12px; }
+        .avatar {
+            width: 45px; height: 45px; border-radius: 12px;
+            background: linear-gradient(45deg, var(--accent), var(--accent-purple));
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+        }
+
+        /* Advanced Balance Card */
+        .main-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px; padding: 25px;
+            text-align: center; position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            margin-bottom: 25px;
+        }
+
+        .main-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .balance-value {
+            font-size: 2.8rem; font-weight: 800; letter-spacing: -1px;
+            margin: 10px 0; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        .pwr-tag {
+            font-size: 0.9rem; color: var(--accent); font-weight: bold; text-transform: uppercase;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-top: 15px; background: rgba(255,255,255,0.05);
+            border-radius: 10px; height: 8px; overflow: hidden;
+        }
+        .progress-fill {
+            width: 65%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-purple));
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        /* Task Cards */
+        .task-list { display: flex; flex-direction: column; gap: 15px; }
+        
+        .task-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-glass);
+            border-radius: 18px; padding: 18px;
+            display: flex; align-items: center; gap: 15px;
+            transition: 0.3s; cursor: pointer;
+        }
+
+        .task-item:hover {
+            background: rgba(255,255,255,0.07);
+            transform: scale(1.02); border-color: var(--accent);
+        }
+
+        .icon-box {
+            width: 50px; height: 50px; border-radius: 14px;
+            background: rgba(0, 242, 255, 0.1);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent);
+        }
+
+        .task-content { flex: 1; }
+        .task-content h4 { font-size: 1rem; margin-bottom: 4px; }
+        .task-content p { font-size: 0.75rem; color: #8892b0; }
+
+        .reward-amount {
+            text-align: right; font-weight: 700; color: #4ade80; font-size: 0.9rem;
+        }
+
+        /* Floating Navigation Bar */
+        .nav-bar {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 400px;
+            background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(15px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px; padding: 15px;
+            display: flex; justify-content: space-around;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-item { color: #64748b; transition: 0.3s; cursor: pointer; }
+        .nav-item.active { color: var(--accent); filter: drop-shadow(0 0 5px var(--accent)); }
+
+        .ad-banner-pro {
+            width: 100%; border-radius: 15px; background: #111;
+            border: 1px solid #222; margin: 20px 0; height: 80px;
+            display: flex; align-items: center; justify-content: center;
+            color: #444; font-size: 0.7rem; text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animate">
+        <div class="blob"></div>
+    </div>
+
+    <div class="container">
+        <div class="user-header">
+            <div class="user-info">
+                <div class="avatar"><i data-lucide="user" size="24"></i></div>
+                <div>
+                    <div style="font-weight: 700; font-size: 0.9rem;">Elite Member</div>
+                    <div style="font-size: 0.7rem; color: #8892b0;">ID: 882910</div>
+                </div>
+            </div>
+            <i data-lucide="bell" size="20" style="color: #8892b0;"></i>
+        </div>
+
+        <div class="main-card">
+            <div class="pwr-tag">Available Balance</div>
+            <div class="balance-value">2,850.40</div>
+            <div style="color: #8892b0; font-size: 0.85rem;">Estimated Value: $28.50</div>
+            
+            <div class="progress-container">
+                <div class="progress-fill"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.7rem; color: #8892b0;">
+                <span>Withdraw Progress</span>
+                <span>65%</span>
+            </div>
+        </div>
+
+        <div class="ad-banner-pro">
+            Native Ad Placement
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="font-size: 1.1rem;">Hot Tasks</h3>
+            <span style="color: var(--accent); font-size: 0.8rem;">Refresh <i data-lucide="refresh-cw" size="12"></i></span>
+        </div>
+
+        <div class="task-list">
+            <div class="task-item">
+                <div class="icon-box"><i data-lucide="play-circle"></i></div>
+                <div class="task-content">
+                    <h4>Premium Video Ad</h4>
+                    <p>Wait for 15 seconds</p>
+                </div>
+                <div class="reward-amount">+100 PWR</div>
+            </div>
+
+            <div class="task-item">
+                <div class="icon-box" style="color: #ffaa00; background: rgba(255,170,0,0.1);"><i data-lucide="shield-check"></i></div>
+                <div class="task-content">
+                    <h4>Verify Identity</h4>
+                    <p>Complete KYC Step 1</p>
+                </div>
+                <div class="reward-amount">+500 PWR</div>
+            </div>
+
+            <div class="task-item">
+                <div class="icon-box" style="color: #a855f7; background: rgba(168,85,247,0.1);"><i data-lucide="layers"></i></div>
+                <div class="task-content">
+                    <h4>Link Unlocker</h4>
+                    <p>Bypass shortlink security</p>
+                </div>
+                <div class="reward-amount">+250 PWR</div>
+            </div>
+        </div>
+
+        <div style="height: 100px;"></div> </div>
+
+    <div class="nav-bar">
+        <div class="nav-item active"><i data-lucide="layout-grid"></i></div>
+        <div class="nav-item"><i data-lucide="wallet"></i></div>
+        <div class="nav-item"><i data-lucide="users"></i></div>
+        <div class="nav-item"><i data-lucide="settings"></i></div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        
+        // Simple Interaction Example
+        document.querySelectorAll('.task-item').forEach(item => {
+            item.onclick = () => {
+                const title = item.querySelector('h4').innerText;
+                alert('Opening: ' + title + '\nPlease complete the task to earn rewards.');
+            };
+        });
+    </script>
+</body>
+  </html>
+  
