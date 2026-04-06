@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>CryptoEarn Pro | $0.50 Min Withdrawal • Ad-Free Experience</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* GLOBAL RESET - NO SIDE SCROLL */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0c12;
+            color: #eef2ff;
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        .page-wrapper {
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1280px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Background glow effect */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(74, 222, 128, 0.06), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1e2a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4ADE80;
+            border-radius: 10px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            border-bottom: 1px solid rgba(74, 222, 128, 0.2);
+            margin-bottom: 2rem;
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            background: linear-gradient(135deg, #FFFFFF, #4ADE80, #22D3EE);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #b9c3d4;
+            margin-top: 0.8rem;
+        }
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.8rem;
+        }
+        .badge {
+            background: rgba(74, 222, 128, 0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            border-radius: 60px;
+            padding: 0.5rem 1.3rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .badge i {
+            margin-right: 8px;
+            color: #4ADE80;
+        }
+
+        /* CTA Button - Main Action */
+        .cta-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0 2rem;
+        }
+        .cta-btn {
+            background: linear-gradient(95deg, #4ADE80, #22D3EE);
+            border: none;
+            padding: 18px 48px;
+            border-radius: 80px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0a0c12;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 15px 35px rgba(74, 222, 128, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+        .cta-btn i {
+            font-size: 1.8rem;
+            animation: pulseGlow 1.2s infinite;
+        }
+        .cta-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 25px 45px rgba(74,222,128,0.6);
+            background: linear-gradient(95deg, #5dee8f, #3ee0ff);
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        /* Stats Grid */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+        .stat-item {
+            background: linear-gradient(145deg, #11151f, #0c0f18);
+            border-radius: 28px;
+            padding: 1.8rem;
+            text-align: center;
+            border: 1px solid #2a2f40;
+            transition: transform 0.2s;
+        }
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(74, 222, 128, 0.4);
+        }
+        .stat-item i {
+            font-size: 2.5rem;
+            color: #4ADE80;
+            margin-bottom: 0.8rem;
+        }
+        .stat-item h3 {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+        .stat-item p {
+            color: #9ca3af;
+        }
+
+        /* Withdrawal Box - Highlight */
+        .withdraw-card {
+            background: linear-gradient(135deg, #0c0f1a, #0a0d16);
+            border-radius: 40px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 2px solid #4ADE80;
+            box-shadow: 0 10px 30px rgba(74,222,128,0.1);
+        }
+        .min-amount {
+            font-size: 3.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FDE047, #4ADE80);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0.5rem 0;
+        }
+        .withdraw-card button {
+            background: #4ADE80;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 1rem;
+        }
+        .withdraw-card button:hover {
+            background: #22c55e;
+            transform: scale(1.02);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1.5rem;
+            border-left: 6px solid #4ADE80;
+            padding-left: 1.2rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            justify-content: center;
+        }
+        .feature-box {
+            flex: 1 1 270px;
+            background: rgba(15, 19, 30, 0.8);
+            backdrop-filter: blur(5px);
+            border-radius: 28px;
+            padding: 1.8rem;
+            border: 1px solid #2a2f42;
+            transition: all 0.25s;
+        }
+        .feature-box:hover {
+            border-color: #4ADE80;
+            transform: translateY(-3px);
+        }
+        .feature-box i {
+            font-size: 2.3rem;
+            background: linear-gradient(145deg, #4ADE80, #22D3EE);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+        .feature-box h4 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Steps Row */
+        .steps-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 2rem 0 2.5rem;
+        }
+        .step-card {
+            background: #10141f;
+            flex: 1;
+            min-width: 180px;
+            border-radius: 24px;
+            padding: 1.8rem;
+            text-align: center;
+            border: 1px solid #252a3a;
+        }
+        .step-num {
+            width: 48px;
+            height: 48px;
+            background: #4ADE80;
+            color: #000;
+            font-weight: 800;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Earnings Table */
+        .earnings-table {
+            width: 100%;
+            background: #0f1320;
+            border-radius: 24px;
+            overflow: hidden;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .earnings-table th,
+        .earnings-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #202433;
+        }
+        .earnings-table th {
+            background: #1a1f2e;
+            color: #4ADE80;
+            font-weight: 600;
+        }
+        .earnings-table tr:hover {
+            background: rgba(74, 222, 128, 0.05);
+        }
+
+        /* Reward Hub */
+        .reward-hub {
+            background: linear-gradient(135deg, #0e1220, #0b0f18);
+            border-radius: 28px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            border: 1px solid #2a2f42;
+        }
+        .reward-hub p {
+            margin: 0.8rem 0;
+        }
+
+        /* Social Bar (No Ads - Just Icons) */
+        .social-bar {
+            background: #121725;
+            border-radius: 60px;
+            padding: 0.8rem 1.8rem;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+            border: 1px solid #2a2f41;
+        }
+        .social-icon {
+            font-size: 1.8rem;
+            color: #cbd5e1;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+        .social-icon:hover {
+            color: #4ADE80;
+            transform: translateY(-3px);
+        }
+
+        /* Testimonial */
+        .testimonial {
+            background: linear-gradient(135deg, #101624, #0b0e18);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #4ADE80;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid #202433;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 680px) {
+            .container {
+                padding: 0 16px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .cta-btn {
+                font-size: 1.1rem;
+                padding: 14px 28px;
+            }
+            .min-amount {
+                font-size: 2.5rem;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* No ads - clean */
+        .no-ads-badge {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #4ADE80;
+            margin-top: 1rem;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+<div class="bg-glow"></div>
+
+<div class="container">
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1><i class="fab fa-bitcoin"></i> CryptoEarn Pro</h1>
+        <p>Next-Gen Earning Ecosystem • Mining • Tasks • Referrals</p>
+        <div class="badge-container">
+            <span class="badge"><i class="fas fa-dollar-sign"></i> Min Withdrawal $0.50</span>
+            <span class="badge"><i class="fas fa-bolt"></i> Instant Payouts</span>
+            <span class="badge"><i class="fas fa-chart-line"></i> Daily Rewards</span>
+            <span class="badge"><i class="fas fa-shield-alt"></i> Fully Verified</span>
+        </div>
+    </div>
+
+    <!-- MAIN CTA BUTTON - High Conversion -->
+    <div class="cta-wrapper">
+        <button class="cta-btn" id="mainCtaBtn">
+            <i class="fas fa-rocket"></i> START EARNING NOW <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <!-- Statistics Section - Dynamic -->
+    <div class="stats-row">
+        <div class="stat-item">
+            <i class="fas fa-users"></i>
+            <h3 id="activeUsers">387,520+</h3>
+            <p>Active Earners</p>
+        </div>
+        <div class="stat-item">
+            <i class="fas fa-dollar-sign"></i>
+            <h3>$<span id="totalPaid">9,845,720</span></h3>
+            <p>Total Payouts</p>
+        </div>
+        <div class="stat-item">
+            <i class="fas fa-clock"></i>
+            <h3>$0.50</h3>
+            <p>Minimum Withdrawal</p>
+        </div>
+        <div class="stat-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <h3>UP TO 24%</h3>
+            <p>Daily ROI Potential</p>
+        </div>
+    </div>
+
+    <!-- Withdrawal Highlight Box -->
+    <div class="withdraw-card">
+        <i class="fas fa-hand-holding-usd" style="font-size: 2.8rem; color:#4ADE80;"></i>
+        <h2 style="margin: 12px 0;">Lowest Minimum Withdrawal</h2>
+        <div class="min-amount">$0.50 ONLY</div>
+        <p style="margin-top: 15px; color: #cbd5e1;">No hidden fees • Instant transfers to BTC, ETH, USDT, LTC, PayPal</p>
+        <button id="withdrawCtaBtn"><i class="fab fa-ethereum"></i> Claim Your Free Bonus</button>
+    </div>
+
+    <!-- Advanced Features Section -->
+    <div class="section-title"><i class="fas fa-crown"></i> Advanced Earning Systems</div>
+    <div class="features-grid">
+        <div class="feature-box">
+            <i class="fas fa-robot"></i>
+            <h4>AI Earnings Optimizer</h4>
+            <p>Machine learning boosts your daily profit by up to 52% based on market trends.</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-chart-pie"></i>
+            <h4>Auto-Compound Engine</h4>
+            <p>Reinvest earnings automatically for exponential growth without manual claims.</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-users"></i>
+            <h4>10-Level Referral</h4>
+            <p>Earn lifetime commissions up to 12% from your network's activity.</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-shield-virus"></i>
+            <h4>Secure Cold Storage</h4>
+            <p>Institutional-grade security with multi-sig wallets & 2FA protection.</p>
+        </div>
+    </div>
+
+    <!-- Earning Methods Table -->
+    <div class="section-title"><i class="fas fa-table-list"></i> Top Earning Strategies</div>
+    <div style="overflow-x: auto; width: 100%;">
+        <table class="earnings-table">
+            <thead>
+                <tr><th>Method</th><th>Daily Earnings</th><th>Min. Withdrawal</th><th>Payout Speed</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><i class="fab fa-bitcoin"></i> Cloud Mining</td><td>$3.50 - $22.00</td><td>$0.50</td><td>Instant</td></tr>
+                <tr><td><i class="fas fa-tasks"></i> Micro Tasks</td><td>$1.50 - $9.00</td><td>$0.50</td><td>2 Hours</td></tr>
+                <tr><td><i class="fas fa-ad"></i> Offerwalls & Surveys</td><td>$2.80 - $18.00</td><td>$0.50</td><td>Same Day</td></tr>
+                <tr><td><i class="fas fa-link"></i> Shortlinks & Downloads</td><td>$0.90 - $6.50</td><td>$0.50</td><td>Instant</td></tr>
+            </tbody>
+         </table>
+    </div>
+
+    <!-- How It Works - 3 Steps -->
+    <div class="section-title"><i class="fas fa-rocket"></i> Start in 3 Simple Steps</div>
+    <div class="steps-row">
+        <div class="step-card">
+            <div class="step-num">1</div>
+            <h4>Sign Up Free</h4>
+            <p>Create account in 30 seconds, no deposit required</p>
+        </div>
+        <div class="step-card">
+            <div class="step-num">2</div>
+            <h4>Choose Your Method</h4>
+            <p>Mining, tasks, offers, or referrals - flexible options</p>
+        </div>
+        <div class="step-card">
+            <div class="step-num">3</div>
+            <h4>Withdraw Anytime</h4>
+            <p>From just $0.50 to any crypto wallet instantly</p>
+        </div>
+    </div>
+
+    <!-- Smart Liquidity & Auto-Pilot System -->
+    <div class="section-title"><i class="fas fa-microchip"></i> Next-Gen Auto-Pilot System</div>
+    <div class="features-grid">
+        <div class="feature-box">
+            <i class="fas fa-charging-station"></i>
+            <h4>Smart Liquidity Bridge</h4>
+            <p>Connect DeFi pools and earn yield + mining rewards simultaneously.</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-clock"></i>
+            <h4>24/7 Auto-Earning</h4>
+            <p>Even while offline, your account generates passive income.</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-chart-line"></i>
+            <h4>Dynamic APY Booster</h4>
+            <p>Boosted rates for active users — up to 18% APY on holdings.</p>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-mobile-alt"></i>
+            <h4>Mobile Optimized</h4>
+            <p>Fully responsive dashboard with real-time notifications.</p>
+        </div>
+    </div>
+
+    <!-- Daily Rewards Hub -->
+    <div class="section-title"><i class="fas fa-gift"></i> Daily Rewards & Bonuses</div>
+    <div class="reward-hub">
+        <p><i class="fas fa-calendar-check" style="color:#4ADE80;"></i> <strong>Daily Check-in:</strong> Claim random bonus up to $8.00 every 24 hours.</p>
+        <p><i class="fas fa-trophy" style="color:#FBBF24;"></i> <strong>Weekly Leaderboard:</strong> Top 20 earners share 0.015 BTC every Friday.</p>
+        <p><i class="fas fa-fire" style="color:#F97316;"></i> <strong>Streak Multiplier:</strong> 7-day streak gives 2x earnings for 24 hours.</p>
+        <div style="margin-top: 1rem;">
+            <span class="badge"><i class="fas fa-clock"></i> Next Reward in 4h 22m</span>
+            <span class="badge"><i class="fas fa-chart-simple"></i> Today's Bonus Pool: $12,450</span>
+        </div>
+    </div>
+
+    <!-- Social Community Bar (No Ads, Just Icons) -->
+    <div class="social-bar">
+        <span style="font-weight: 500;"><i class="fas fa-share-alt"></i> Join 450k+ Community:</span>
+        <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+    </div>
+
+    <!-- Testimonial Section -->
+    <div class="testimonial">
+        <i class="fas fa-quote-left" style="font-size: 2rem; opacity: 0.6; color:#4ADE80;"></i>
+        <p style="font-style: italic; margin-top: 12px; font-size: 1.05rem;">"CryptoEarn Pro changed everything for me. The $0.50 minimum withdrawal is unbeatable, and I've already withdrawn over $2,300 in my first month. Highly recommended!"</p>
+        <p style="margin-top: 12px;"><strong>- Michael R.</strong> Verified Top Earner <i class="fas fa-check-circle" style="color:#4ADE80;"></i></p>
+    </div>
+
+    <!-- Security & Trust Badges -->
+    <div style="background: #0a0d14; border-radius: 20px; padding: 1rem; text-align: center; margin: 1rem 0;">
+        <span><i class="fas fa-lock"></i> SSL Encrypted</span> &nbsp;|&nbsp;
+        <span><i class="fas fa-shield-alt"></i> 2FA Security</span> &nbsp;|&nbsp;
+        <span><i class="fas fa-check-circle"></i> Audited Smart Contracts</span>
+    </div>
+
+    <footer>
+        <p><i class="far fa-copyright"></i> 2025 CryptoEarn Pro — Premium Crypto Earning Platform | Min Withdrawal $0.50</p>
+        <p style="margin-top: 8px;"><i class="fas fa-chart-line"></i> Live Active Users: <span id="liveUsersCount">32,180</span> • Today's Payouts: $<span id="todayPayout">215,430</span></p>
+        <div class="no-ads-badge">
+            <i class="fas fa-eye-slash"></i> Ad-Free Experience • Clean & Fast Interface
+        </div>
+    </footer>
+</div>
+</div>
+
+<script>
+    // Dynamic counter animations for engagement (purely visual)
+    let totalPaidElem = document.getElementById('totalPaid');
+    let currentTotal = 9845720;
+    setInterval(() => {
+        let increment = Math.floor(Math.random() * 250) + 80;
+        currentTotal += increment;
+        totalPaidElem.innerText = currentTotal.toLocaleString();
+    }, 5800);
+
+    let liveUsersElem = document.getElementById('liveUsersCount');
+    let liveUsersVal = 32180;
+    setInterval(() => {
+        let change = Math.floor(Math.random() * 100) - 30;
+        let newVal = liveUsersVal + change;
+        if (newVal > 30500 && newVal < 36000) liveUsersVal = newVal;
+        else if (newVal >= 36000) liveUsersVal = 35800;
+        else if (newVal <= 30500) liveUsersVal = 30700;
+        else liveUsersVal = newVal;
+        liveUsersElem.innerText = liveUsersVal.toLocaleString();
+    }, 7000);
+
+    let todayPayoutSpan = document.getElementById('todayPayout');
+    let todayAmount = 215430;
+    setInterval(() => {
+        let addToday = Math.floor(Math.random() * 420) + 150;
+        todayAmount += addToday;
+        todayPayoutSpan.innerText = todayAmount.toLocaleString();
+    }, 5000);
+
+    let activeUsersStat = document.getElementById('activeUsers');
+    let activeCount = 387520;
+    setInterval(() => {
+        let inc = Math.floor(Math.random() * 35) + 5;
+        activeCount += inc;
+        activeUsersStat.innerText = activeCount.toLocaleString() + '+';
+    }, 9000);
+
+    // CTA Buttons interactions
+    const mainBtn = document.getElementById('mainCtaBtn');
+    const withdrawBtn = document.getElementById('withdrawCtaBtn');
+    
+    function showSignupMessage() {
+        alert("✨ Welcome to CryptoEarn Pro! ✨\n\n✅ Minimum withdrawal: $0.50\n✅ Instant payouts\n✅ No hidden fees\n\nStart earning today and claim your free $0.50 bonus!");
+    }
+    
+    if(mainBtn) mainBtn.addEventListener('click', showSignupMessage);
+    if(withdrawBtn) withdrawBtn.addEventListener('click', showSignupMessage);
+    
+    // Ensure no horizontal scroll on any element
+    window.addEventListener('load', function() {
+        document.body.style.overflowX = 'hidden';
+        let allElements = document.querySelectorAll('*');
+        allElements.forEach(el => {
+            if (el.scrollWidth > el.clientWidth) {
+                console.warn('Overflow fixed');
+            }
+        });
+    });
+</script>
+</body>
+</html>
