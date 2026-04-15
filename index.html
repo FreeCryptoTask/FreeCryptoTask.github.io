@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoVerse | Ultimate Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #0f172a; color: white; font-family: 'Inter', sans-serif; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .crypto-gradient { background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+        <div>
+            <h1 class="text-4xl font-extrabold tracking-tight">Crypto<span class="text-blue-500">Verse</span></h1>
+            <p class="text-slate-400">Real-time Market Insights & Trends</p>
+        </div>
+        <div class="flex gap-4">
+            <div class="glass-card px-6 py-2 rounded-full border border-green-500/30 text-green-400">
+                <i class="fas fa-arrow-up mr-2"></i> Market Cap: +2.4%
+            </div>
+            <button class="crypto-gradient px-6 py-2 rounded-full font-bold hover:scale-105 transition-transform">
+                Connect Wallet
+            </button>
+        </div>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="glass-card p-6 rounded-3xl">
+            <p class="text-slate-400 text-sm mb-1">Bitcoin (BTC)</p>
+            <h2 class="text-3xl font-bold">$64,231.50</h2>
+            <p class="text-green-500 font-medium text-sm">+1.25% (24h)</p>
+        </div>
+        <div class="glass-card p-6 rounded-3xl border-l-4 border-blue-500">
+            <p class="text-slate-400 text-sm mb-1">Ethereum (ETH)</p>
+            <h2 class="text-3xl font-bold">$3,450.12</h2>
+            <p class="text-red-500 font-medium text-sm">-0.45% (24h)</p>
+        </div>
+        <div class="glass-card p-6 rounded-3xl">
+            <p class="text-slate-400 text-sm mb-1">Solana (SOL)</p>
+            <h2 class="text-3xl font-bold">$145.80</h2>
+            <p class="text-green-500 font-medium text-sm">+5.10% (24h)</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <div class="lg:col-span-2 glass-card p-6 rounded-3xl">
+            <h3 class="text-xl font-bold mb-6">Market Analysis (BTC/USD)</h3>
+            <canvas id="cryptoChart" height="150"></canvas>
+        </div>
+
+        <div class="glass-card p-6 rounded-3xl">
+            <h3 class="text-xl font-bold mb-4">Trending Assets</h3>
+            <ul class="space-y-4">
+                <li class="flex justify-between items-center p-3 hover:bg-slate-800 rounded-xl transition">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">B</div>
+                        <div><p class="font-bold">BNB</p><p class="text-xs text-slate-400">Binance</p></div>
+                    </div>
+                    <span class="text-green-400 font-bold">$580.4</span>
+                </li>
+                <li class="flex justify-between items-center p-3 hover:bg-slate-800 rounded-xl transition">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center">A</div>
+                        <div><p class="font-bold">ADA</p><p class="text-xs text-slate-400">Cardano</p></div>
+                    </div>
+                    <span class="text-red-400 font-bold">$0.45</span>
+                </li>
+                <li class="flex justify-between items-center p-3 hover:bg-slate-800 rounded-xl transition">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center">P</div>
+                        <div><p class="font-bold">DOT</p><p class="text-xs text-slate-400">Polkadot</p></div>
+                    </div>
+                    <span class="text-green-400 font-bold">$7.20</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <section class="mt-12">
+        <h2 class="text-2xl font-bold mb-6">Crypto Kya Hai? (Basics)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="glass-card p-5 rounded-2xl border-t-4 border-yellow-500">
+                <h4 class="font-bold mb-2">Blockchain</h4>
+                <p class="text-sm text-slate-400">Ek digital ledger jo har transaction ko secure aur transparent banata hai.</p>
+            </div>
+            <div class="glass-card p-5 rounded-2xl border-t-4 border-blue-500">
+                <h4 class="font-bold mb-2">Mining</h4>
+                <p class="text-sm text-slate-400">Naye coins create karne aur transactions verify karne ka process.</p>
+            </div>
+            <div class="glass-card p-5 rounded-2xl border-t-4 border-purple-500">
+                <h4 class="font-bold mb-2">DeFi</h4>
+                <p class="text-sm text-slate-400">Decentralized Finance—bina bank ke financial services use karna.</p>
+            </div>
+            <div class="glass-card p-5 rounded-2xl border-t-4 border-pink-500">
+                <h4 class="font-bold mb-2">Wallets</h4>
+                <p class="text-sm text-slate-400">Aapki crypto holdings ko store karne ke liye private keys ka storage.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="mt-20 py-8 border-t border-slate-800 text-center text-slate-500 text-sm">
+        <p>&copy; 2026 CryptoVerse Page. All Rights Reserved. Not Financial Advice.</p>
+    </footer>
+
+    <script>
+        // Fake Chart Data
+        const ctx = document.getElementById('cryptoChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['10 AM', '12 PM', '2 PM', '4 PM', '6 PM', '8 PM', '10 PM'],
+                datasets: [{
+                    label: 'BTC Price (USD)',
+                    data: [62000, 63500, 63000, 64500, 64000, 65000, 64231],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+  </html>
+                  
