@@ -3,137 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoVerse | Ultimate Dashboard</title>
+    <title>Netflix Pro Mod | Ultimate Access</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #0f172a; color: white; font-family: 'Inter', sans-serif; }
-        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-        .crypto-gradient { background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); }
+        body { background-color: #000; color: #fff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        .hero-overlay { background: linear-gradient(to top, rgba(0,0,0,1) 10%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.8) 100%); }
+        .netflix-red { color: #e50914; }
+        .btn-netflix { background-color: #e50914; transition: 0.3s; }
+        .btn-netflix:hover { background-color: #b20710; transform: scale(1.05); }
+        .card-hover:hover { transform: translateY(-10px); border-color: #e50914; }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body>
 
-    <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-        <div>
-            <h1 class="text-4xl font-extrabold tracking-tight">Crypto<span class="text-blue-500">Verse</span></h1>
-            <p class="text-slate-400">Real-time Market Insights & Trends</p>
-        </div>
-        <div class="flex gap-4">
-            <div class="glass-card px-6 py-2 rounded-full border border-green-500/30 text-green-400">
-                <i class="fas fa-arrow-up mr-2"></i> Market Cap: +2.4%
-            </div>
-            <button class="crypto-gradient px-6 py-2 rounded-full font-bold hover:scale-105 transition-transform">
-                Connect Wallet
-            </button>
-        </div>
-    </header>
+    <nav class="flex justify-between items-center px-6 py-4 absolute w-full z-50">
+        <h1 class="text-3xl font-black netflix-red tracking-tighter">NETFLIX <span class="bg-red-600 text-white text-xs px-2 py-1 rounded ml-1">MOD</span></h1>
+        <button class="bg-transparent border border-gray-400 px-4 py-1 rounded text-sm hover:bg-white hover:text-black transition">English</button>
+    </nav>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div class="glass-card p-6 rounded-3xl">
-            <p class="text-slate-400 text-sm mb-1">Bitcoin (BTC)</p>
-            <h2 class="text-3xl font-bold">$64,231.50</h2>
-            <p class="text-green-500 font-medium text-sm">+1.25% (24h)</p>
-        </div>
-        <div class="glass-card p-6 rounded-3xl border-l-4 border-blue-500">
-            <p class="text-slate-400 text-sm mb-1">Ethereum (ETH)</p>
-            <h2 class="text-3xl font-bold">$3,450.12</h2>
-            <p class="text-red-500 font-medium text-sm">-0.45% (24h)</p>
-        </div>
-        <div class="glass-card p-6 rounded-3xl">
-            <p class="text-slate-400 text-sm mb-1">Solana (SOL)</p>
-            <h2 class="text-3xl font-bold">$145.80</h2>
-            <p class="text-green-500 font-medium text-sm">+5.10% (24h)</p>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <section class="relative h-[90vh] flex items-center justify-center text-center px-4 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+             class="absolute inset-0 w-full h-full object-cover opacity-40" alt="Background">
+        <div class="absolute inset-0 hero-overlay"></div>
         
-        <div class="lg:col-span-2 glass-card p-6 rounded-3xl">
-            <h3 class="text-xl font-bold mb-6">Market Analysis (BTC/USD)</h3>
-            <canvas id="cryptoChart" height="150"></canvas>
-        </div>
-
-        <div class="glass-card p-6 rounded-3xl">
-            <h3 class="text-xl font-bold mb-4">Trending Assets</h3>
-            <ul class="space-y-4">
-                <li class="flex justify-between items-center p-3 hover:bg-slate-800 rounded-xl transition">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">B</div>
-                        <div><p class="font-bold">BNB</p><p class="text-xs text-slate-400">Binance</p></div>
-                    </div>
-                    <span class="text-green-400 font-bold">$580.4</span>
-                </li>
-                <li class="flex justify-between items-center p-3 hover:bg-slate-800 rounded-xl transition">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center">A</div>
-                        <div><p class="font-bold">ADA</p><p class="text-xs text-slate-400">Cardano</p></div>
-                    </div>
-                    <span class="text-red-400 font-bold">$0.45</span>
-                </li>
-                <li class="flex justify-between items-center p-3 hover:bg-slate-800 rounded-xl transition">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center">P</div>
-                        <div><p class="font-bold">DOT</p><p class="text-xs text-slate-400">Polkadot</p></div>
-                    </div>
-                    <span class="text-green-400 font-bold">$7.20</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <section class="mt-12">
-        <h2 class="text-2xl font-bold mb-6">Crypto Kya Hai? (Basics)</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="glass-card p-5 rounded-2xl border-t-4 border-yellow-500">
-                <h4 class="font-bold mb-2">Blockchain</h4>
-                <p class="text-sm text-slate-400">Ek digital ledger jo har transaction ko secure aur transparent banata hai.</p>
-            </div>
-            <div class="glass-card p-5 rounded-2xl border-t-4 border-blue-500">
-                <h4 class="font-bold mb-2">Mining</h4>
-                <p class="text-sm text-slate-400">Naye coins create karne aur transactions verify karne ka process.</p>
-            </div>
-            <div class="glass-card p-5 rounded-2xl border-t-4 border-purple-500">
-                <h4 class="font-bold mb-2">DeFi</h4>
-                <p class="text-sm text-slate-400">Decentralized Finance—bina bank ke financial services use karna.</p>
-            </div>
-            <div class="glass-card p-5 rounded-2xl border-t-4 border-pink-500">
-                <h4 class="font-bold mb-2">Wallets</h4>
-                <p class="text-sm text-slate-400">Aapki crypto holdings ko store karne ke liye private keys ka storage.</p>
+        <div class="relative z-10 max-w-3xl">
+            <h2 class="text-5xl md:text-7xl font-extrabold mb-4">Unlimited Movies, Shows & More.</h2>
+            <p class="text-xl md:text-2xl mb-8">Premium Unlocked. No Ads. 4K Ultra HD.</p>
+            
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                <a href="#download" class="btn-netflix px-8 py-4 rounded font-bold text-xl flex items-center gap-2">
+                    <i class="fas fa-download"></i> DOWNLOAD APK
+                </a>
+                <p class="text-gray-400 text-sm">Version 10.5.2 | Size: 45MB</p>
             </div>
         </div>
     </section>
 
-    <footer class="mt-20 py-8 border-t border-slate-800 text-center text-slate-500 text-sm">
-        <p>&copy; 2026 CryptoVerse Page. All Rights Reserved. Not Financial Advice.</p>
+    <section class="py-20 px-6 bg-zinc-950">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card p-8 rounded-2xl border border-zinc-800 text-center card-hover transition duration-300">
+                <i class="fas fa-tv text-4xl netflix-red mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Watch on TV</h3>
+                <p class="text-gray-400">Smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray players.</p>
+            </div>
+            <div class="glass-card p-8 rounded-2xl border border-zinc-800 text-center card-hover transition duration-300">
+                <i class="fas fa-cloud-download-alt text-4xl netflix-red mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Offline Mode</h3>
+                <p class="text-gray-400">Save your favorites easily and always have something to watch.</p>
+            </div>
+            <div class="glass-card p-8 rounded-2xl border border-zinc-800 text-center card-hover transition duration-300">
+                <i class="fas fa-infinity text-4xl netflix-red mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">No Subscription</h3>
+                <p class="text-gray-400">Enjoy all premium features without any monthly billing.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="download" class="py-20 text-center border-t border-zinc-800">
+        <div class="max-w-xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-6">Ready to Watch?</h2>
+            <div class="bg-zinc-900 p-8 rounded-3xl border-2 border-dashed border-zinc-700">
+                <p class="mb-6 text-gray-300 font-mono text-sm">File Name: Netflix_Premium_Mod_v10.apk</p>
+                <button onclick="startDownload()" id="dl-btn" class="w-full btn-netflix py-4 rounded-xl font-black text-lg">
+                    START FAST DOWNLOAD
+                </button>
+                <div id="status" class="mt-4 hidden text-yellow-500 italic">Connecting to secure server...</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-gray-600 text-sm border-t border-zinc-900">
+        <p>Disclaimer: This is a UI concept page for educational purposes only.</p>
+        <div class="flex justify-center gap-6 mt-4">
+            <a href="#" class="hover:underline">Privacy</a>
+            <a href="#" class="hover:underline">Terms</a>
+            <a href="#" class="hover:underline">Help Center</a>
+        </div>
     </footer>
 
     <script>
-        // Fake Chart Data
-        const ctx = document.getElementById('cryptoChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['10 AM', '12 PM', '2 PM', '4 PM', '6 PM', '8 PM', '10 PM'],
-                datasets: [{
-                    label: 'BTC Price (USD)',
-                    data: [62000, 63500, 63000, 64500, 64000, 65000, 64231],
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { grid: { color: 'rgba(255,255,255,0.05)' } },
-                    x: { grid: { display: false } }
-                }
-            }
-        });
+        function startDownload() {
+            const btn = document.getElementById('dl-btn');
+            const status = document.getElementById('status');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating Link...';
+            status.classList.remove('hidden');
+            
+            setTimeout(() => {
+                btn.innerHTML = 'DOWNLOAD NOW';
+                status.innerHTML = 'Link Generated! Check your browser downloads.';
+                status.classList.replace('text-yellow-500', 'text-green-500');
+            }, 3000);
+        }
     </script>
 </body>
-  </html>
-                  
+</html>
