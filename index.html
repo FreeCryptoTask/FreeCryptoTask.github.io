@@ -1,210 +1,240 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoPulse | Master the Market</title>
+    <title>CryptoMaster | Complete Encyclopedia</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
         :root {
-            --primary-bg: #0f172a;
-            --secondary-bg: #1e293b;
-            --accent-color: #38bdf8;
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-            --success: #22c55e;
+            --bg-deep: #020617;
+            --bg-card: #1e293b;
+            --gold: #f59e0b;
+            --blue: #3b82f6;
+            --green: #10b981;
+            --text-white: #f8fafc;
+            --text-gray: #94a3b8;
         }
 
+        * { box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--primary-bg);
-            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-white);
             margin: 0;
-            line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
-        /* --- Header & Navigation --- */
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 10px; }
+
+        /* --- Header --- */
         header {
-            background: var(--secondary-bg);
-            padding: 1rem 5%;
+            background: rgba(2, 6, 23, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 2px solid var(--accent-color);
+            border-bottom: 1px solid #334155;
         }
-
-        .logo { font-size: 1.8rem; font-weight: bold; color: var(--accent-color); }
-
-        nav a {
-            color: var(--text-main);
-            text-decoration: none;
-            margin-left: 20px;
-            font-weight: 500;
-        }
-
-        /* --- Market Ticker --- */
-        .ticker-wrap {
-            background: #000;
-            padding: 10px 0;
-            overflow: hidden;
-        }
-        .ticker {
-            display: flex;
-            white-space: nowrap;
-            animation: marquee 30s linear infinite;
-        }
-        .ticker-item {
-            padding: 0 30px;
-            font-family: monospace;
-        }
-        .up { color: var(--success); }
-
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--blue); letter-spacing: -1px; }
+        nav a { color: var(--text-gray); text-decoration: none; margin-left: 25px; font-weight: 500; transition: 0.3s; }
+        nav a:hover { color: var(--blue); }
 
         /* --- Hero Section --- */
         .hero {
-            padding: 60px 5%;
+            padding: 100px 5%;
             text-align: center;
-            background: linear-gradient(rgba(15,23,42,0.8), rgba(15,23,42,0.8)), url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=2000');
-            background-size: cover;
+            background: radial-gradient(circle at center, #1e293b 0%, #020617 70%);
         }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; background: linear-gradient(to right, #fff, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.2rem; color: var(--text-gray); max-width: 800px; margin: 0 auto; }
 
-        /* --- Main Content Layout --- */
-        .container {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-            padding: 40px 5%;
-        }
-
-        /* --- Blog Posts --- */
-        .main-content h2 { border-left: 5px solid var(--accent-color); padding-left: 15px; margin-bottom: 30px; }
+        /* --- Information Sections --- */
+        .mega-container { max-width: 1200px; margin: 0 auto; padding: 50px 5%; }
         
-        .blog-card {
-            background: var(--secondary-bg);
-            border-radius: 12px;
+        .info-section { margin-bottom: 80px; }
+        .section-title { font-size: 2rem; border-bottom: 2px solid var(--blue); display: inline-block; margin-bottom: 30px; padding-bottom: 5px; }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        
+        .card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid #334155;
+            transition: 0.4s;
+        }
+        .card:hover { border-color: var(--blue); transform: translateY(-10px); background: #1e293bce; }
+        .card h3 { color: var(--gold); margin-top: 0; }
+        .card p { color: var(--text-gray); font-size: 0.95rem; line-height: 1.7; }
+
+        /* --- Glossary Table --- */
+        .crypto-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: var(--bg-card);
+            border-radius: 15px;
             overflow: hidden;
-            margin-bottom: 30px;
-            transition: 0.3s;
         }
-        .blog-card:hover { transform: translateY(-5px); }
-        .blog-img { width: 100%; height: 250px; object-fit: cover; }
-        .blog-info { padding: 20px; }
-        .category { color: var(--accent-color); font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
-        
-        /* --- Sidebar --- */
-        .sidebar-box {
-            background: var(--secondary-bg);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 30px;
+        .crypto-table th, .crypto-table td { padding: 15px; text-align: left; border-bottom: 1px solid #334155; }
+        .crypto-table th { background: #334155; color: var(--blue); }
+
+        /* --- Crypto Live Chart Placeholder --- */
+        .chart-box {
+            width: 100%;
+            height: 400px;
+            background: #000;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed var(--blue);
+            color: var(--text-gray);
         }
 
-        /* --- Responsive --- */
-        @media (max-width: 900px) {
-            .container { grid-template-columns: 1fr; }
+        footer { padding: 50px 5%; background: #000; text-align: center; border-top: 1px solid #334155; }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">CryptoPulse</div>
+        <div class="logo">CRYPTO<span style="color:white">MASTER</span></div>
         <nav>
-            <a href="#">Home</a>
-            <a href="#">Analysis</a>
-            <a href="#">Guides</a>
-            <a href="#">News</a>
+            <a href="#basics">Basics</a>
+            <a href="#types">Types</a>
+            <a href="#security">Security</a>
+            <a href="#market">Market</a>
         </nav>
     </header>
 
-    <div class="ticker-wrap">
-        <div class="ticker">
-            <span class="ticker-item">BTC: $68,432.10 <span class="up">▲ 2.4%</span></span>
-            <span class="ticker-item">ETH: $3,521.45 <span class="up">▲ 1.8%</span></span>
-            <span class="ticker-item">SOL: $145.20 <span class="up">▲ 5.1%</span></span>
-            <span class="ticker-item">ADA: $0.45 <span class="up">▲ 0.5%</span></span>
-            <span class="ticker-item">DOGE: $0.16 <span class="up">▲ 12.0%</span></span>
-        </div>
-    </div>
-
     <section class="hero">
-        <h1>Future of Finance: Decoded</h1>
-        <p>Blockchain se lekar DeFi tak, sab kuch ek hi jagah par.</p>
+        <h1>Digital Revolution Ki Puri Jankari</h1>
+        <p>Aapki complete guide Cryptocurrency, Blockchain, aur Web3 ki duniya ko samajhne ke liye. Neeche scroll karein aur expert banein.</p>
     </section>
 
-    <div class="container">
-        <main class="main-content">
-            <h2>Latest Market Insights</h2>
-
-            <article class="blog-card">
-                <img src="https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&q=80&w=800" class="blog-img">
-                <div class="blog-info">
-                    <span class="category">Bitcoin</span>
-                    <h3>Bitcoin Halving 2024: Kya aap taiyar hain?</h3>
-                    <p>Bitcoin halving ek aisa event hai jo supply ko kam karta hai. Is saal ke halving se market par kya asar padega, jaaniye pura detail...</p>
-                    <a href="#" style="color: var(--accent-color);">Read More →</a>
+    <div class="mega-container">
+        
+        <div id="basics" class="info-section">
+            <h2 class="section-title">1. Cryptocurrency Kya Hai?</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Decentralization</h3>
+                    <p>Cryptocurrency kisi bhi bank ya government ke control mein nahi hoti. Ye Peer-to-Peer network par kaam karti hai, jiska matlab hai transaction seedha ek insaan se dusre tak pahunchta hai.</p>
                 </div>
-            </article>
-
-            <article class="blog-card">
-                <img src="https://images.unsplash.com/photo-1639710339852-ed12e96e3840?auto=format&fit=crop&q=80&w=800" class="blog-img">
-                <div class="blog-info">
-                    <span class="category">DeFi</span>
-                    <h3>What is Decentralized Finance (DeFi)?</h3>
-                    <p>DeFi banks ke bina financial services provide karta hai. Kya ye traditional banking ko hamesha ke liye badal dega?</p>
-                    <a href="#" style="color: var(--accent-color);">Read More →</a>
+                <div class="card">
+                    <h3>Blockchain Technology</h3>
+                    <p>Ye ek digital ledger (khata) hai jahan har transaction record hota hai. Isse kabhi mitaya ya badla nahi ja sakta, jo isse 100% transparent banata hai.</p>
                 </div>
-            </article>
-
-            <article class="blog-card">
-                <img src="https://images.unsplash.com/photo-1644143379190-08a5f055639d?auto=format&fit=crop&q=80&w=800" class="blog-img">
-                <div class="blog-info">
-                    <span class="category">Security</span>
-                    <h3>Wallet Security: Apne Assets ko kaise safe rakhein?</h3>
-                    <p>Hardware wallets vs Software wallets. 5 tips jo aapke crypto ko hackers se bachayengi.</p>
-                    <a href="#" style="color: var(--accent-color);">Read More →</a>
+                <div class="card">
+                    <h3>Cryptography</h3>
+                    <p>Advanced math coding ka use karke transactions ko secure kiya jata hai. Isliye iska naam 'Crypto' pada hai kyuki ise hack karna lagbhag namumkin hai.</p>
                 </div>
-            </article>
-        </main>
-
-        <aside class="sidebar">
-            <div class="sidebar-box">
-                <h3>🔥 Trending Topics</h3>
-                <ul>
-                    <li>Web3 Development</li>
-                    <li>Layer 2 Solutions</li>
-                    <li>NFT Market Trends</li>
-                    <li>Altcoin Season 2026</li>
-                </ul>
             </div>
+        </div>
 
-            <div class="sidebar-box">
-                <h3>Newsletter</h3>
-                <p>Naye signals aur news ke liye subscribe karein.</p>
-                <input type="email" placeholder="Your Email" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: none;">
-                <button style="width: 100%; padding: 10px; background: var(--accent-color); border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Subscribe Now</button>
-            </div>
+        <div id="types" class="info-section">
+            <h2 class="section-title">2. Top Cryptocurrencies</h2>
+            <table class="crypto-table">
+                <thead>
+                    <tr>
+                        <th>Asset Name</th>
+                        <th>Function</th>
+                        <th>Key Fact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color: var(--gold); font-weight: bold;">Bitcoin (BTC)</td>
+                        <td>Digital Gold</td>
+                        <td>Duniya ki pehli crypto (Created by Satoshi Nakamoto).</td>
+                    </tr>
+                    <tr>
+                        <td style="color: var(--blue); font-weight: bold;">Ethereum (ETH)</td>
+                        <td>Smart Contracts</td>
+                        <td>Ispar dApps aur NFTs banaye jate hain.</td>
+                    </tr>
+                    <tr>
+                        <td style="color: var(--green); font-weight: bold;">Tether (USDT)</td>
+                        <td>Stablecoin</td>
+                        <td>Iski value hamesha $1 ke barabar rehti hai.</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #a855f7; font-weight: bold;">Solana (SOL)</td>
+                        <td>High Speed</td>
+                        <td>Ye transactions ko bohot fast aur sasta banata hai.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-            <div class="sidebar-box">
-                <h3>Top Exchanges</h3>
-                <ol>
-                    <li>Binance</li>
-                    <li>Coinbase</li>
-                    <li>KuCoin</li>
-                    <li>Bybit</li>
-                </ol>
+        <div class="info-section">
+            <h2 class="section-title">3. Mining vs Staking</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Proof of Work (Mining)</h3>
+                    <p>Bitcoin jaise coins computers ki power use karke naye coins banate hain. Is process ko mining kehte hain, jisme bohot electricity kharch hoti hai.</p>
+                </div>
+                <div class="card">
+                    <h3>Proof of Stake (Staking)</h3>
+                    <p>Ethereum jaise coins mein aap apne coins ko network mein lock karke interest earn karte hain. Ye mining se zyada eco-friendly hai.</p>
+                </div>
+                <div class="card">
+                    <h3>Market Cap</h3>
+                    <p>Total coins multiplied by current price. Ye batata hai ki kisi crypto project ki market mein kitni badi value hai.</p>
+                </div>
             </div>
-        </aside>
+        </div>
+
+        <div id="security" class="info-section">
+            <h2 class="section-title">4. Crypto Wallet & Security</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Hot Wallets</h3>
+                    <p>Ye internet se connected hote hain (Jaise Trust Wallet ya Binance). Ise daily trading ke liye use kiya jata hai lekin ye thode kam secure hote hain.</p>
+                </div>
+                <div class="card">
+                    <h3>Cold Wallets (Hardware)</h3>
+                    <p>Ye ek Pendrive ki tarah dikhte hain aur offline hote hain. Ye sabse zyada safe hote hain kyuki inka internet se koi lena-dena nahi hota.</p>
+                </div>
+                <div class="card">
+                    <h3>Private Key</h3>
+                    <p>Ye aapka password hai. Agar aapne ise kho diya, toh aapke paise hamesha ke liye gayab ho jayenge. Isliye ise kabhi kisi ko na batayein.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2 class="section-title">5. Crypto Terminology (Shabdawali)</h2>
+            <div class="card" style="width: 100%;">
+                <p><strong>HODL:</strong> Long term ke liye crypto ko hold karke rakhna.</p>
+                <p><strong>FOMO:</strong> Fear of Missing Out—Jab log darr ke maare upar jaati market mein paisa lagate hain.</p>
+                <p><strong>FUD:</strong> Market mein galat afwah failana taaki prices niche girein.</p>
+                <p><strong>Bull Market:</strong> Jab prices lagatar upar ja rahe hon.</p>
+                <p><strong>Bear Market:</strong> Jab market crash ho rahi ho aur prices niche ja rahe hon.</p>
+            </div>
+        </div>
+
     </div>
 
-    <footer style="text-align: center; padding: 40px; background: #000; color: var(--text-dim);">
-        <p>&copy; 2026 CryptoPulse Blog. All Rights Reserved.</p>
+    <footer>
+        <div class="logo" style="margin-bottom: 20px;">CRYPTO MASTER</div>
+        <p style="color: var(--text-gray); font-size: 0.8rem;">
+            Dhyan rakhein: Cryptocurrency investment risky ho sakti hai. Hamesha apni research (DYOR) karein.<br>
+            Made for Educational Purposes. © 2026 CryptoMaster Page.
+        </p>
     </footer>
 
 </body>
