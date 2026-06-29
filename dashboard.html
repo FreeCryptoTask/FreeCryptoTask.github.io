@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ============================================ -->
-    <!-- GOOGLE ANALYTICS (GA4)                       -->
-    <!-- ============================================ -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0MFQP2Y9SX"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -12,9 +10,6 @@
         gtag('config', 'G-0MFQP2Y9SX');
     </script>
 
-    <!-- ============================================ -->
-    <!-- BASIC META TAGS                              -->
-    <!-- ============================================ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,18 +21,14 @@
     <meta name="author" content="TOONZI Exchange">
     <link rel="canonical" href="https://toonzi.xyz/dashboard.html">
 
-    <!-- ============================================ -->
-    <!-- OPEN GRAPH                                   -->
-    <!-- ============================================ -->
+    <!-- Open Graph -->
     <meta property="og:title" content="Dashboard - TOONZI Exchange">
     <meta property="og:description" content="Your TOONZI Exchange dashboard. Track your coins, tasks, and earnings.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://toonzi.xyz/dashboard.html">
     <meta property="og:site_name" content="TOONZI Exchange">
 
-    <!-- ============================================ -->
-    <!-- SCHEMA MARKUP                                -->
-    <!-- ============================================ -->
+    <!-- Schema Markup -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -55,15 +46,11 @@
     }
     </script>
 
-    <!-- ============================================ -->
-    <!-- FAVICON                                      -->
-    <!-- ============================================ -->
+    <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-    <!-- ============================================ -->
-    <!-- FONT AWESOME                                 -->
-    <!-- ============================================ -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Firebase SDK -->
@@ -1093,30 +1080,41 @@
                 userData = doc.data();
                 currentUser = user;
 
-                // Update UI
+                // Update UI - Real Data
                 const name = user.email ? user.email.split('@')[0] : 'User';
                 document.getElementById('userName').textContent = name.charAt(0).toUpperCase() + name.slice(1);
                 document.getElementById('profileName').textContent = name.charAt(0).toUpperCase() + name.slice(1);
                 document.getElementById('profileEmail').textContent = user.email || 'user@email.com';
                 document.getElementById('profileCountry').innerHTML = '<i class="fas fa-globe"></i> ' + (userData.country || 'Unknown');
 
-                document.getElementById('coinBalance').textContent = userData.coins || 0;
-                document.getElementById('statCoins').textContent = userData.coins || 0;
-                document.getElementById('statTasks').textContent = userData.tasksCompleted || 0;
+                // REAL COINS from Firestore
+                const coins = userData.coins || 0;
+                document.getElementById('coinBalance').textContent = coins;
+                document.getElementById('statCoins').textContent = coins;
 
-                // Load today's tasks
-                await loadTodayTasks(user.uid);
+                // REAL TASKS from Firestore
+                const tasks = userData.tasksCompleted || 0;
+                document.getElementById('statTasks').textContent = tasks;
 
-                // Random rank
-                document.getElementById('statRank').textContent = '#' + (Math.floor(Math.random() * 100) + 1);
+                // REAL RANK based on coins
+                await updateRealRank(user.uid, coins);
 
+                // Bonus badge
                 if (userData.bonusReceived) {
                     document.getElementById('bonusBadge').textContent = '✨ 40 Bonus Coins Received!';
                 }
 
+                // Load today's tasks
+                await loadTodayTasks(user.uid);
+
                 // Hide loading, show content
                 document.getElementById('loadingSpinner').style.display = 'none';
                 document.getElementById('dashboardContent').style.display = 'block';
+
+                // Add welcome activity
+                if (userData.tasksCompleted === 0 && userData.coins === 40) {
+                    addActivity('🎉 Welcome Bonus!', 'You received 40 bonus coins!');
+                }
 
             } catch (error) {
                 console.error('Error loading dashboard:', error);
@@ -1124,6 +1122,43 @@
             }
         }
 
+        // ============================================
+        // REAL RANK CALCULATION
+        // ============================================
+        async function updateRealRank(uid, userCoins) {
+            try {
+                // Get all users sorted by coins
+                const snapshot = await db.collection('users')
+                    .orderBy('coins', 'desc')
+                    .get();
+                
+                let rank = 1;
+                let found = false;
+                snapshot.forEach((doc) => {
+                    if (doc.id === uid) {
+                        found = true;
+                    }
+                    if (!found) {
+                        rank++;
+                    }
+                });
+
+                document.getElementById('statRank').textContent = '#' + rank;
+                
+                // Update rank in Firestore
+                await db.collection('users').doc(uid).update({
+                    rank: rank
+                });
+
+            } catch (error) {
+                console.error('Error calculating rank:', error);
+                document.getElementById('statRank').textContent = '#1';
+            }
+        }
+
+        // ============================================
+        // TODAY'S TASKS
+        // ============================================
         async function loadTodayTasks(uid) {
             try {
                 const today = new Date().toISOString().split('T')[0];
@@ -1137,6 +1172,7 @@
                     await docRef.set({ count: 0, date: today });
                 }
 
+                document.getElementById('statToday').textContent = tasksDoneToday;
                 updateTaskTracker();
             } catch (error) {
                 console.error('Error loading daily tasks:', error);
@@ -1152,8 +1188,12 @@
             document.getElementById('tasksDone').textContent = done;
             document.getElementById('progressFill').style.width = percent + '%';
             document.getElementById('progressPercent').textContent = Math.round(percent) + '%';
+            document.getElementById('statToday').textContent = done;
         }
 
+        // ============================================
+        // COMPLETE TASK
+        // ============================================
         async function completeTask() {
             if (!currentUser) {
                 showPopup('warning', '⚠️ Not Logged In', 'Please login to complete tasks.', 'warning');
@@ -1177,7 +1217,7 @@
                     lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
                 });
 
-                // Update user's total tasks
+                // Update user's total tasks and coins
                 const userRef = db.collection('users').doc(currentUser.uid);
                 await userRef.update({
                     tasksCompleted: firebase.firestore.FieldValue.increment(1),
@@ -1193,8 +1233,11 @@
                 document.getElementById('statCoins').textContent = userData.coins;
                 document.getElementById('statTasks').textContent = userData.tasksCompleted;
 
+                // Update rank
+                await updateRealRank(currentUser.uid, userData.coins);
+
                 // Add activity
-                addActivity('Task Completed', 'You completed a task and earned 2 coins!');
+                addActivity('✅ Task Completed', 'You earned 2 coins!');
 
                 updateTaskTracker();
                 showPopup('success', '✅ Task Completed!', 'You earned 2 coins! Keep going!', 'success');
@@ -1205,6 +1248,9 @@
             }
         }
 
+        // ============================================
+        // RESET DAILY TASKS
+        // ============================================
         async function resetDailyTasks() {
             if (!currentUser) {
                 showPopup('warning', '⚠️ Not Logged In', 'Please login to reset tasks.', 'warning');
@@ -1219,6 +1265,7 @@
                 await docRef.set({ count: 0, date: today });
 
                 updateTaskTracker();
+                document.getElementById('statToday').textContent = 0;
                 showPopup('info', '🔄 Reset Complete', 'Your daily progress has been reset.', 'info');
 
             } catch (error) {
@@ -1227,6 +1274,9 @@
             }
         }
 
+        // ============================================
+        // ADD ACTIVITY
+        // ============================================
         function addActivity(title, time) {
             const list = document.getElementById('activityList');
             const item = document.createElement('div');
@@ -1247,6 +1297,9 @@
             }
         }
 
+        // ============================================
+        // LOGOUT
+        // ============================================
         function logout() {
             auth.signOut().then(() => {
                 showPopup('info', '👋 Logged Out', 'You have been logged out successfully.', 'info');
@@ -1264,7 +1317,6 @@
                 currentUser = user;
                 await loadDashboard(user);
             } else {
-                // Redirect to index.html if not logged in
                 showPopup('warning', '⚠️ Login Required', 'Please login to access your dashboard.', 'warning');
                 setTimeout(() => {
                     window.location.href = 'index.html';
