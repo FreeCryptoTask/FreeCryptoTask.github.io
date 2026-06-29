@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ============================================ -->
+    <!-- GOOGLE ANALYTICS (GA4)                       -->
+    <!-- ============================================ -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0MFQP2Y9SX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0MFQP2Y9SX');
+    </script>
+
+    <!-- ============================================ -->
+    <!-- BASIC META TAGS                              -->
+    <!-- ============================================ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>TOONZI Exchange - Worldwide Micro-Task Platform | Earn Points</title>
+    <meta name="description" content="Earn points by completing tasks and get your tasks completed by others. Follow4Follow model with 30+ countries support. Free to join!">
+    <meta name="keywords" content="micro-task, follow4follow, task exchange, earn points, social media tasks, TOONZI Exchange">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="TOONZI Exchange">
+    <meta name="language" content="English">
+    <link rel="canonical" href="https://toonzi.xyz/">
+
+    <!-- ============================================ -->
+    <!-- OPEN GRAPH                                   -->
+    <!-- ============================================ -->
+    <meta property="og:title" content="TOONZI Exchange - Worldwide Micro-Task Platform">
+    <meta property="og:description" content="Earn points by completing tasks and get your tasks completed by others. Free to join!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toonzi.xyz/">
+    <meta property="og:site_name" content="TOONZI Exchange">
+
+    <!-- ============================================ -->
+    <!-- SCHEMA MARKUP                                -->
+    <!-- ============================================ -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "TOONZI Exchange",
+        "url": "https://toonzi.xyz/",
+        "description": "Worldwide Micro-Task Exchange Platform",
+        "applicationCategory": "Utility Tool",
+        "operatingSystem": "All",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+
+    <!-- ============================================ -->
+    <!-- FAVICON                                      -->
+    <!-- ============================================ -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <!-- ============================================ -->
+    <!-- FONT AWESOME                                 -->
+    <!-- ============================================ -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <style>
+        /* ============================================ */
+        /* RESET & BASICS                              */
+        /* ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+        }
+        a { text-decoration: none; color: inherit; }
+
+        /* ============================================ */
+        /* HEADER                                      */
+        /* ============================================ */
+        header {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            padding: 18px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .menu-icon { 
+            font-size: 24px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            padding: 5px 10px;
+            position: absolute;
+            left: 20px;
+        }
+        .menu-icon:hover { color: #ffcc00; }
+        
+        .site-title {
+            font-family: 'Impact', sans-serif;
+            font-size: 28px;
+            letter-spacing: 2px;
+            color: #fff;
+            text-align: center;
+        }
+        .site-title span { color: #ffcc00; }
+        .site-title .sub-text {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            opacity: 0.6;
+            font-weight: 300;
+            display: block;
+            text-align: center;
+            margin-top: -2px;
+        }
+
+        /* ============================================ */
+        /* SIDEBAR                                      */
+        /* ============================================ */
+        .sidebar {
+            position: fixed; 
+            top: 0; 
+            left: -300px; 
+            width: 300px; 
+            height: 100%;
+            background: #1a1a2e; 
+            color: #fff; 
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding-top: 70px; 
+            z-index: 2000; 
+            box-shadow: 4px 0 30px rgba(0,0,0,0.4); 
+            overflow-y: auto;
+        }
+        .sidebar.active { left: 0; }
+        .sidebar .close-btn { 
+            position: absolute; 
+            top: 18px; 
+            right: 22px; 
+            font-size: 30px; 
+            cursor: pointer; 
+            color: #ffcc00;
+            transition: 0.3s;
+        }
+        .sidebar .close-btn:hover { transform: rotate(90deg); }
+        
+        .sidebar .sidebar-logo {
+            text-align: center;
+            padding: 10px 0 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin: 0 25px 15px;
+        }
+        .sidebar .sidebar-logo h2 {
+            font-family: 'Impact', sans-serif;
+            font-size: 28px;
+            letter-spacing: 2px;
+        }
+        .sidebar .sidebar-logo h2 span { color: #ffcc00; }
+        .sidebar .sidebar-logo p {
+            font-size: 12px;
+            color: #888;
+            letter-spacing: 2px;
+            margin-top: 2px;
+        }
+        
+        .sidebar a {
+            padding: 14px 30px;
+            text-decoration: none;
+            font-size: 15px;
+            color: #bbb;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: 0.3s;
+            border-left: 4px solid transparent;
+        }
+        .sidebar a i {
+            width: 22px;
+            font-size: 16px;
+            text-align: center;
+        }
+        .sidebar a:hover { 
+            color: #fff; 
+            background-color: rgba(255, 204, 0, 0.08); 
+            border-left: 4px solid #ffcc00; 
+        }
+        .sidebar .divider {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin: 10px 25px;
+        }
+
+        /* ============================================ */
+        /* HERO SECTION                                 */
+        /* ============================================ */
+        .hero {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            padding: 60px 20px 40px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 204, 0, 0.05);
+            border-radius: 50%;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 204, 0, 0.03);
+            border-radius: 50%;
+        }
+        .hero h1 {
+            font-size: 44px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero h1 span { color: #ffcc00; }
+        .hero p {
+            font-size: 17px;
+            opacity: 0.8;
+            max-width: 550px;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+        }
+        .hero .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .hero .hero-stats .stat {
+            text-align: center;
+        }
+        .hero .hero-stats .stat h3 {
+            font-size: 26px;
+            color: #ffcc00;
+        }
+        .hero .hero-stats .stat p {
+            font-size: 13px;
+            opacity: 0.6;
+            margin: 0;
+        }
+
+        /* ============================================ */
+        /* AUTH BUTTONS                                */
+        /* ============================================ */
+        .auth-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        .auth-buttons .btn {
+            padding: 14px 45px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-width: 150px;
+            border: none;
+        }
+        .auth-buttons .btn-login {
+            background: transparent;
+            border: 2px solid #ffcc00;
+            color: #ffcc00;
+        }
+        .auth-buttons .btn-login:hover {
+            background: #ffcc00;
+            color: #0f0c29;
+            transform: translateY(-3px);
+        }
+        .auth-buttons .btn-register {
+            background: #ffcc00;
+            color: #0f0c29;
+        }
+        .auth-buttons .btn-register:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 204, 0, 0.2);
+        }
+
+        /* ============================================ */
+        /* TICKER                                      */
+        /* ============================================ */
+        .ticker {
+            background: #fff;
+            border: 1px solid #ffcc00;
+            border-radius: 12px;
+            padding: 13px 22px;
+            margin: 25px auto 30px;
+            text-align: center;
+            max-width: 700px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        }
+        .ticker i {
+            color: #ffcc00;
+            margin-right: 8px;
+        }
+        .ticker .highlight {
+            color: #ffcc00;
+            font-weight: 700;
+        }
+
+        /* ============================================ */
+        /* FEATURES                                    */
+        /* ============================================ */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto 30px;
+            padding: 0 20px;
+        }
+        .feature-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 26px 22px;
+            text-align: center;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffcc00;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.06);
+        }
+        .feature-card i {
+            font-size: 32px;
+            color: #ffcc00;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .feature-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+        .feature-card p {
+            font-size: 13px;
+            color: #999;
+            line-height: 1.5;
+        }
+
+        /* ============================================ */
+        /* AUTH FORM                                   */
+        /* ============================================ */
+        .auth-section {
+            max-width: 450px;
+            margin: 30px auto 0;
+            display: none;
+            scroll-margin-top: 80px;
+            padding: 0 20px;
+        }
+        .auth-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 35px 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .auth-card h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+        .auth-card h2 span { color: #ffcc00; }
+        .auth-card .sub {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 20px;
+        }
+        .auth-card .group {
+            margin-bottom: 14px;
+        }
+        .auth-card .group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .auth-card .group label i {
+            color: #ffcc00;
+        }
+        .auth-card .group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #f8f9fc;
+            border: 2px solid #eef2f6;
+            border-radius: 10px;
+            color: #1a1a2e;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .auth-card .group input:focus {
+            border-color: #302b63;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(48, 43, 99, 0.06);
+        }
+        .auth-card .group input::placeholder {
+            color: #bbb;
+        }
+        .auth-card .forgot {
+            text-align: right;
+            margin-top: -6px;
+            margin-bottom: 14px;
+        }
+        .auth-card .forgot a {
+            color: #999;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .auth-card .forgot a:hover {
+            color: #ffcc00;
+            text-decoration: underline;
+        }
+        .auth-card .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0f0c29, #302b63);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .auth-card .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(48, 43, 99, 0.2);
+        }
+        .auth-card .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ============================================ */
+        /* POPUP                                       */
+        /* ============================================ */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .popup-overlay.show {
+            display: flex;
+        }
+        .popup-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 35px 30px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            animation: popIn 0.4s ease;
+        }
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .popup-box .popup-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        .popup-box .popup-icon.success { color: #00c851; }
+        .popup-box .popup-icon.error { color: #ff6b6b; }
+        .popup-box .popup-icon.warning { color: #ffcc00; }
+        .popup-box .popup-icon.info { color: #0984e3; }
+        .popup-box h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+        }
+        .popup-box p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+        .popup-box .popup-btn {
+            padding: 10px 35px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63);
+            color: #fff;
+        }
+        .popup-box .popup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(48, 43, 99, 0.2);
+        }
+        .popup-box .popup-btn.success-btn { background: linear-gradient(135deg, #00c851, #007e33); }
+        .popup-box .popup-btn.error-btn { background: linear-gradient(135deg, #ff6b6b, #c0392b); }
+        .popup-box .popup-btn.warning-btn { background: linear-gradient(135deg, #ffcc00, #f0a500); color: #1a1a2e; }
+        .popup-box .popup-btn.info-btn { background: linear-gradient(135deg, #0984e3, #0652DD); }
+
+        /* ============================================ */
+        /* DASHBOARD                                   */
+        /* ============================================ */
+        .dashboard {
+            display: none;
+            max-width: 900px;
+            margin: 20px auto 0;
+            padding: 0 20px;
+        }
+        .dashboard.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        .dashboard .welcome {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+        }
+        .dashboard .welcome span { color: #ffcc00; }
+        .dashboard .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+        .dashboard .stat-box {
+            background: #fff;
+            border-radius: 14px;
+            padding: 22px 18px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.03);
+            transition: 0.3s;
+        }
+        .dashboard .stat-box:hover {
+            border-color: #ffcc00;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        }
+        .dashboard .stat-box .num {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1a1a2e;
+        }
+        .dashboard .stat-box .num i {
+            color: #ffcc00;
+            font-size: 20px;
+            margin-right: 4px;
+        }
+        .dashboard .stat-box .lbl {
+            font-size: 13px;
+            color: #999;
+            margin-top: 2px;
+        }
+        .dashboard .stat-box .badge {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 2px 12px;
+            background: rgba(255, 204, 0, 0.08);
+            color: #ffcc00;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 204, 0, 0.1);
+        }
+        .dashboard .logout-btn {
+            padding: 10px 24px;
+            background: #f0f4f8;
+            border: 1px solid #eef2f6;
+            border-radius: 10px;
+            color: #555;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.3s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .dashboard .logout-btn:hover {
+            background: #ff6b6b;
+            color: #fff;
+            border-color: #ff6b6b;
+        }
+        .dashboard .soon {
+            text-align: center;
+            padding: 40px 20px;
+            color: #bbb;
+        }
+        .dashboard .soon i {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 10px;
+            color: #ffcc00;
+            opacity: 0.3;
+        }
+
+        /* ============================================ */
+        /* FOOTER - NORMAL (NOT STICKY)                */
+        /* ============================================ */
+        footer { 
+            width: 100%; 
+            background: #0f0c29; 
+            color: #ccc; 
+            text-align: center; 
+            padding: 20px 20px; 
+            border-top: 3px solid #ffcc00; 
+            margin-top: 40px;
+            font-size: 13px; 
+            line-height: 1.6;
+        }
+        footer .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        footer .footer-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        footer .footer-links a {
+            color: #ccc;
+            font-size: 13px;
+            transition: 0.3s;
+            padding: 4px 12px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        footer .footer-links a:hover {
+            color: #ffcc00;
+            border-color: #ffcc00;
+            background: rgba(255, 204, 0, 0.05);
+        }
+        footer .copyright {
+            color: #888;
+            font-size: 12px;
+        }
+        footer .copyright a {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+
+        /* ============================================ */
+        /* THEME TOGGLE                                */
+        /* ============================================ */
+        .theme-toggle { 
+            position: fixed; 
+            bottom: 30px; 
+            right: 25px; 
+            background: #302b63; 
+            color: white; 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 22px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25); 
+            cursor: pointer; 
+            z-index: 1000; 
+            transition: 0.3s; 
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        .theme-toggle:hover { 
+            transform: scale(1.1); 
+            background: #ffcc00; 
+            color: #333; 
+            border-color: #ffcc00;
+        }
+
+        /* ============================================ */
+        /* DARK MODE                                   */
+        /* ============================================ */
+        body.dark-mode { 
+            background-color: #121212; 
+            color: #e0e0e0; 
+        }
+        body.dark-mode header { 
+            background: linear-gradient(135deg, #1a1a2e, #2a2a4e); 
+        }
+        body.dark-mode .sidebar { 
+            background: #1a1a2e; 
+        }
+        body.dark-mode .feature-card,
+        body.dark-mode .auth-card,
+        body.dark-mode .dashboard .stat-box,
+        body.dark-mode .ticker { 
+            background: #1e1e2e; 
+            border-color: #2a2a3e;
+        }
+        body.dark-mode .feature-card h4,
+        body.dark-mode .auth-card h2,
+        body.dark-mode .dashboard .welcome,
+        body.dark-mode .dashboard .stat-box .num,
+        body.dark-mode .popup-box h3 { 
+            color: #fff; 
+        }
+        body.dark-mode .feature-card p,
+        body.dark-mode .auth-card .sub,
+        body.dark-mode .dashboard .stat-box .lbl,
+        body.dark-mode .popup-box p { 
+            color: #aaa; 
+        }
+        body.dark-mode .auth-card .group input { 
+            background: #2a2a3e; 
+            border-color: #444; 
+            color: #fff; 
+        }
+        body.dark-mode .auth-card .group input:focus {
+            border-color: #ffcc00;
+            background: #2a2a3e;
+        }
+        body.dark-mode .theme-toggle { 
+            background: #333; 
+            color: #ffcc00; 
+            border-color: #555;
+        }
+        body.dark-mode footer { 
+            background: #1a1a2e; 
+            border-top: 3px solid #444; 
+        }
+        body.dark-mode .hero {
+            background: linear-gradient(135deg, #1a1a2e, #2a2a4e, #1a1a2e);
+        }
+        body.dark-mode footer .footer-links a {
+            border-color: rgba(255,255,255,0.05);
+        }
+        body.dark-mode footer .footer-links a:hover {
+            border-color: #ffcc00;
+        }
+        body.dark-mode .popup-box {
+            background: #1e1e2e;
+            border: 1px solid #2a2a3e;
+        }
+
+        /* ============================================ */
+        /* RESPONSIVE                                  */
+        /* ============================================ */
+        @media (max-width: 768px) {
+            .site-title { font-size: 22px; }
+            .site-title .sub-text { font-size: 9px; }
+            .hero h1 { font-size: 32px; }
+            .hero p { font-size: 15px; }
+            .hero .hero-stats { gap: 30px; }
+            .hero .hero-stats .stat h3 { font-size: 22px; }
+            .auth-buttons .btn { padding: 12px 30px; font-size: 14px; min-width: 120px; }
+            .features { grid-template-columns: 1fr 1fr; gap: 14px; }
+            .feature-card { padding: 20px 16px; }
+            .dashboard .stats { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .auth-card { padding: 25px 20px; }
+            footer .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            footer .footer-links {
+                justify-content: center;
+            }
+            .popup-box { padding: 25px 20px; }
+            .menu-icon { left: 15px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 26px; }
+            .auth-buttons { flex-direction: column; align-items: center; }
+            .auth-buttons .btn { width: 100%; }
+            .features { grid-template-columns: 1fr; }
+            .dashboard .stats { grid-template-columns: 1fr; }
+            .auth-card { padding: 20px 14px; }
+            .popup-box { padding: 20px 16px; }
+            .popup-box .popup-icon { font-size: 36px; }
+            .menu-icon { left: 12px; font-size: 20px; }
+            .site-title { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================== -->
+    <!-- HEADER                                     -->
+    <!-- ========================================== -->
+    <header>
+        <div class="menu-icon" onclick="toggleSidebar()" aria-label="Menu"><i class="fas fa-bars"></i></div>
+        <div class="site-title">
+            TOON<span>ZI</span>
+            <span class="sub-text">Exchange</span>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- SIDEBAR                                    -->
+    <!-- ========================================== -->
+    <div id="mySidebar" class="sidebar" role="navigation" aria-label="Main navigation">
+        <span class="close-btn" onclick="toggleSidebar()" aria-label="Close menu">&times;</span>
+        <div class="sidebar-logo">
+            <h2>TOON<span>ZI</span></h2>
+            <p>EXCHANGE</p>
+        </div>
+        
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="terms-and-condition.html"><i class="fas fa-file-contract"></i> Terms & Condition</a>
+        <a href="privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- HERO SECTION                               -->
+    <!-- ========================================== -->
+    <section class="hero" id="heroSection">
+        <h1>Worldwide <span>Micro-Task</span> Exchange</h1>
+        <p>Complete tasks, earn points, and get your tasks done by others. Follow4Follow model with users from 30+ countries.</p>
+        
+        <div class="auth-buttons" id="authButtons">
+            <button class="btn btn-login" onclick="scrollToAuth('login')">Login</button>
+            <button class="btn btn-register" onclick="scrollToAuth('register')">Sign Up</button>
+        </div>
+
+        <div class="hero-stats" style="margin-top:25px;">
+            <div class="stat" style="margin-right:auto;">
+                <h3>30+</h3>
+                <p>Countries</p>
+            </div>
+            <div class="stat" style="margin-left:auto;">
+                <h3>100%</h3>
+                <p>Free to Join</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TICKER                                     -->
+    <!-- ========================================== -->
+    <div class="ticker" id="ticker">
+        <i class="fas fa-gift"></i>
+        🎯 Get <span class="highlight">40 Free Coins</span> if you are among the first <span class="highlight">30 users</span> from your country!
+    </div>
+
+    <!-- ========================================== -->
+    <!-- FEATURES                                   -->
+    <!-- ========================================== -->
+    <div class="features" id="features">
+        <div class="feature-card">
+            <i class="fas fa-tasks"></i>
+            <h4>Complete Tasks</h4>
+            <p>Earn points by completing tasks from other users</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-users"></i>
+            <h4>Follow4Follow</h4>
+            <p>Get your tasks completed by the community</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-globe-americas"></i>
+            <h4>30+ Countries</h4>
+            <p>Connect with users worldwide</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-gem"></i>
+            <h4>Bonus System</h4>
+            <p>First 30 users from each country get 40 free coins</p>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- AUTH FORM                                  -->
+    <!-- ========================================== -->
+    <div class="auth-section" id="authSection">
+        <div class="auth-card">
+            <h2 id="authTitle">Create <span>Account</span></h2>
+            <p class="sub" id="authSub">Join the worldwide task exchange platform</p>
+
+            <div class="group">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="emailInput" placeholder="your@email.com">
+            </div>
+            <div class="group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="passwordInput" placeholder="••••••••">
+            </div>
+
+            <div class="forgot">
+                <a onclick="forgotPassword()">Forgot Password?</a>
+            </div>
+
+            <button class="btn-submit" id="authBtn" onclick="handleAuth()">
+                <i class="fas fa-user-plus"></i> Create Account
+            </button>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- DASHBOARD                                 -->
+    <!-- ========================================== -->
+    <div class="dashboard" id="dashboard">
+        <div class="welcome">
+            Welcome back, <span id="userName">User</span>! 👋
+        </div>
+        <div class="stats">
+            <div class="stat-box">
+                <div class="num"><i class="fas fa-coins"></i> <span id="statCoins">0</span></div>
+                <div class="lbl">Total Coins</div>
+            </div>
+            <div class="stat-box">
+                <div class="num"><i class="fas fa-tasks"></i> <span id="statTasks">0</span></div>
+                <div class="lbl">Tasks Completed</div>
+            </div>
+            <div class="stat-box">
+                <div class="num"><i class="fas fa-globe"></i> <span id="statCountry">-</span></div>
+                <div class="lbl">Country</div>
+                <div class="badge" id="bonusBadge">✨ 40 Bonus Coins</div>
+            </div>
+            <div class="stat-box">
+                <div class="num"><i class="fas fa-trophy"></i> <span id="statRank">#0</span></div>
+                <div class="lbl">Rank</div>
+            </div>
+        </div>
+        <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+
+        <div class="soon">
+            <i class="fas fa-rocket"></i>
+            <p>Your task exchange hub is ready!</p>
+            <p style="font-size:13px;color:#ccc;">More features coming soon...</p>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- POPUP                                      -->
+    <!-- ========================================== -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-box">
+            <div class="popup-icon" id="popupIcon"><i class="fas fa-check-circle"></i></div>
+            <h3 id="popupTitle">Success!</h3>
+            <p id="popupMessage">Your action was completed successfully.</p>
+            <button class="popup-btn" id="popupBtn" onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- FOOTER - NORMAL (NOT STICKY)              -->
+    <!-- ========================================== -->
+    <footer>
+        <div class="footer-content">
+            <div class="copyright">
+                &copy; 2012-2025 <a href="https://toonzi.xyz">TOONZI</a>. All Rights Reserved.
+            </div>
+            <div class="footer-links">
+                <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+                <a href="terms-and-condition.html"><i class="fas fa-file-contract"></i> Terms</a>
+                <a href="privacy-policy.html"><i class="fas fa-shield-alt"></i> Privacy</a>
+                <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- THEME TOGGLE                               -->
+    <!-- ========================================== -->
+    <div class="theme-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT                                 -->
+    <!-- ========================================== -->
+    <script>
+        // ============================================
+        // FIREBASE CONFIG
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyABekPzR4zxlY8rws16hyYNmFlMXBcggXk",
+            authDomain: "vansh-98953.firebaseapp.com",
+            databaseURL: "https://vansh-98953-default-rtdb.firebaseio.com",
+            projectId: "vansh-98953",
+            storageBucket: "vansh-98953.firebasestorage.app",
+            messagingSenderId: "784796743834",
+            appId: "1:784796743834:web:b4ca65fc00f6ce50ff0723",
+            measurementId: "G-V4037GN0ZB"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // ============================================
+        // STATE
+        // ============================================
+        let isLoginMode = false;
+        let currentUser = null;
+        let userCountry = '';
+
+        // ============================================
+        // POPUP FUNCTIONS
+        // ============================================
+        function showPopup(icon, title, message, type = 'success') {
+            const overlay = document.getElementById('popupOverlay');
+            const iconEl = document.getElementById('popupIcon');
+            const titleEl = document.getElementById('popupTitle');
+            const msgEl = document.getElementById('popupMessage');
+            const btn = document.getElementById('popupBtn');
+
+            iconEl.className = 'popup-icon ' + type;
+            if (type === 'success') iconEl.innerHTML = '<i class="fas fa-check-circle"></i>';
+            else if (type === 'error') iconEl.innerHTML = '<i class="fas fa-times-circle"></i>';
+            else if (type === 'warning') iconEl.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+            else if (type === 'info') iconEl.innerHTML = '<i class="fas fa-info-circle"></i>';
+
+            titleEl.textContent = title;
+            msgEl.textContent = message;
+
+            btn.className = 'popup-btn';
+            if (type === 'success') btn.classList.add('success-btn');
+            else if (type === 'error') btn.classList.add('error-btn');
+            else if (type === 'warning') btn.classList.add('warning-btn');
+            else if (type === 'info') btn.classList.add('info-btn');
+
+            overlay.classList.add('show');
+        }
+
+        function closePopup() {
+            document.getElementById('popupOverlay').classList.remove('show');
+        }
+
+        // ============================================
+        // TOGGLE FUNCTIONS
+        // ============================================
+        function toggleSidebar() { 
+            document.getElementById("mySidebar").classList.toggle("active"); 
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+            const icon = document.querySelector(".theme-toggle i");
+            if (document.body.classList.contains("dark-mode")) {
+                icon.classList.remove("fa-moon"); 
+                icon.classList.add("fa-sun");
+            } else {
+                icon.classList.remove("fa-sun"); 
+                icon.classList.add("fa-moon");
+            }
+        }
+
+        // ============================================
+        // AUTH FUNCTIONS
+        // ============================================
+        function scrollToAuth(mode) {
+            isLoginMode = (mode === 'register');
+            switchMode();
+            document.getElementById('authSection').classList.add('active');
+            document.getElementById('authSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function switchMode() {
+            const title = document.getElementById('authTitle');
+            const sub = document.getElementById('authSub');
+            const btn = document.getElementById('authBtn');
+
+            if (isLoginMode) {
+                title.innerHTML = 'Create <span>Account</span>';
+                sub.textContent = 'Join the worldwide task exchange platform';
+                btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+            } else {
+                title.textContent = 'Login';
+                sub.textContent = 'Welcome back! Login to your account';
+                btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+            }
+            document.getElementById('emailInput').value = '';
+            document.getElementById('passwordInput').value = '';
+        }
+
+        function forgotPassword() {
+            const email = prompt('Enter your email address to reset password:');
+            if (email && email.trim()) {
+                auth.sendPasswordResetEmail(email.trim())
+                    .then(() => {
+                        showPopup('success', '✅ Email Sent!', 'Password reset link sent to your email. Check your inbox.', 'success');
+                    })
+                    .catch((err) => {
+                        let msg = err.message;
+                        if (msg.includes('user-not-found')) msg = 'No account found with this email address.';
+                        else if (msg.includes('invalid-email')) msg = 'Please enter a valid email address.';
+                        else msg = 'Something went wrong. Please try again.';
+                        showPopup('error', '❌ Error!', msg, 'error');
+                    });
+            } else {
+                showPopup('warning', '⚠️ Email Required', 'Please enter a valid email address.', 'warning');
+            }
+        }
+
+        async function getCountry() {
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                return data.country_name || 'Unknown';
+            } catch {
+                return 'Unknown';
+            }
+        }
+
+        async function checkBonus(country) {
+            try {
+                const snap = await db.collection('users').where('country', '==', country).get();
+                return snap.size < 30;
+            } catch {
+                return false;
+            }
+        }
+
+        async function createUser(uid, email, country, bonus) {
+            const data = {
+                uid, email,
+                country: country || 'Unknown',
+                coins: bonus ? 40 : 0,
+                tasksCompleted: 0,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                bonusReceived: bonus,
+                isFirst30: bonus
+            };
+            await db.collection('users').doc(uid).set(data);
+            return data;
+        }
+
+        async function getUserData(uid) {
+            try {
+                const doc = await db.collection('users').doc(uid).get();
+                return doc.exists ? doc.data() : null;
+            } catch {
+                return null;
+            }
+        }
+
+        async function handleAuth() {
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value.trim();
+            const btn = document.getElementById('authBtn');
+
+            if (!email || !password) {
+                showPopup('warning', '⚠️ Required Fields', 'Please enter both email and password.', 'warning');
+                return;
+            }
+            if (password.length < 6) {
+                showPopup('warning', '⚠️ Weak Password', 'Password must be at least 6 characters.', 'warning');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = isLoginMode ? 'Creating...' : 'Logging in...';
+
+            try {
+                let cred;
+                if (isLoginMode) {
+                    cred = await auth.createUserWithEmailAndPassword(email, password);
+                } else {
+                    cred = await auth.signInWithEmailAndPassword(email, password);
+                }
+
+                const user = cred.user;
+                currentUser = user;
+
+                if (isLoginMode) {
+                    const country = await getCountry();
+                    userCountry = country;
+                    const bonus = await checkBonus(country);
+                    await createUser(user.uid, email, country, bonus);
+                    showPopup('success', '🎉 Account Created!', bonus ? `You are among the first 30 users from ${country}! +40 coins!` : 'Welcome aboard!', 'success');
+                } else {
+                    const data = await getUserData(user.uid);
+                    if (data) {
+                        userCountry = data.country || 'Unknown';
+                        showPopup('success', '👋 Welcome Back!', `Welcome back ${email.split('@')[0]}!`, 'success');
+                    } else {
+                        const country = await getCountry();
+                        userCountry = country;
+                        const bonus = await checkBonus(country);
+                        await createUser(user.uid, email, country, bonus);
+                        showPopup('success', '✅ Account Restored', 'Your account has been restored.', 'success');
+                    }
+                }
+
+                setTimeout(() => showDashboard(user), 500);
+
+            } catch (err) {
+                let msg = err.message;
+                if (msg.includes('email-already-in-use')) msg = 'This email is already registered. Please login.';
+                else if (msg.includes('wrong-password')) msg = 'Incorrect password. Please try again.';
+                else if (msg.includes('user-not-found')) msg = 'No account found. Please register.';
+                else if (msg.includes('too-many-requests')) msg = 'Too many attempts. Try again later.';
+                else if (msg.includes('invalid-email')) msg = 'Please enter a valid email address.';
+                else if (msg.includes('network-request-failed')) msg = 'Network error. Please check your connection.';
+                else msg = 'Something went wrong. Please try again.';
+                showPopup('error', '❌ Error!', msg, 'error');
+                btn.disabled = false;
+                btn.innerHTML = isLoginMode ? '<i class="fas fa-user-plus"></i> Create Account' : '<i class="fas fa-sign-in-alt"></i> Login';
+            }
+        }
+
+        async function showDashboard(user) {
+            document.getElementById('authSection').classList.remove('active');
+            document.getElementById('heroSection').style.display = 'none';
+            document.getElementById('features').style.display = 'none';
+            document.getElementById('ticker').style.display = 'none';
+            document.getElementById('authButtons').style.display = 'none';
+            document.getElementById('dashboard').classList.add('active');
+
+            const data = await getUserData(user.uid);
+            if (data) {
+                const name = user.email ? user.email.split('@')[0] : 'User';
+                document.getElementById('userName').textContent = name.charAt(0).toUpperCase() + name.slice(1);
+                document.getElementById('statCoins').textContent = data.coins || 0;
+                document.getElementById('statTasks').textContent = data.tasksCompleted || 0;
+                document.getElementById('statCountry').textContent = data.country || 'Unknown';
+                document.getElementById('statRank').textContent = '#' + (Math.floor(Math.random() * 100) + 1);
+                if (data.bonusReceived) {
+                    document.getElementById('bonusBadge').textContent = '✨ 40 Bonus Coins Received!';
+                }
+            }
+        }
+
+        function logout() {
+            auth.signOut().then(() => {
+                showPopup('info', '👋 Logged Out', 'You have been logged out successfully.', 'info');
+                setTimeout(() => location.reload(), 1500);
+            });
+        }
+
+        // ============================================
+        // AUTH STATE
+        // ============================================
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = user;
+                const data = await getUserData(user.uid);
+                if (data) showDashboard(user);
+            } else {
+                document.getElementById('dashboard').classList.remove('active');
+                document.getElementById('heroSection').style.display = 'block';
+                document.getElementById('features').style.display = 'grid';
+                document.getElementById('ticker').style.display = 'block';
+                document.getElementById('authButtons').style.display = 'flex';
+                document.getElementById('authSection').classList.remove('active');
+            }
+        });
+
+        // ============================================
+        // ENTER KEY
+        // ============================================
+        document.getElementById('emailInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') document.getElementById('passwordInput').focus();
+        });
+        document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') handleAuth();
+        });
+
+        // ============================================
+        // KEYBOARD SHORTCUTS
+        // ============================================
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePopup();
+                if (document.getElementById('mySidebar').classList.contains('active')) {
+                    toggleSidebar();
+                }
+            }
+        });
+
+        // ============================================
+        // CLOSE SIDEBAR ON OUTSIDE CLICK
+        // ============================================
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('mySidebar');
+            const menuIcon = document.querySelector('.menu-icon');
+            if (sidebar.classList.contains('active') && 
+                !sidebar.contains(e.target) && 
+                !menuIcon.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // ============================================
+        // INIT
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            if (auth.currentUser) {
+                setTimeout(() => showDashboard(auth.currentUser), 300);
+            }
+        });
+    </script>
+
+</body>
+</html>
